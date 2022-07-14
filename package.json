@@ -1,0 +1,27 @@
+{
+    "name": "projeto-padrao",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "export BUILD=development; nodemon src/server.js",
+        "prod": "export BUILD=production; nodemon src/server.js"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.2",
+        "sucrase": "^3.20.3"
+    },
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
+        "express": "^4.17.1",
+        "express-rate-limit": "^6.3.0",
+        "express-session": "^1.17.2",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.7.1",
+        "path": "^0.12.7",
+        "uuid": "^8.3.2"
+    }
+}
