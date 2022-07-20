@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 
 import Auth from '../../config/auth';
 
+import jwt from 'jsonwebtoken';
+
 const GetUser = async (email) => {
 
     try {
@@ -44,12 +46,11 @@ class SessionController {
                 return res.status(400).json({ error: 'invalid-password' });
             }
 
-            res.status(200).json({
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                },
+            const token = await jwt.sign({ _id: user._id }, process.env.SECRET_AUTH, {
+                expiresIn: process.env.EXPIRE_AUTH
             });
+
+            res.status(200).json({ token });
 
         } catch (e) {
             console.log(e)

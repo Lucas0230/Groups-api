@@ -2,9 +2,10 @@ import Mongoose from 'mongoose';
 import Database from '../config/database';
 
 import UsersModel from '../app/models/User';
+import GroupsModel from '../app/models/Group';
 
 // models
-const models = [UsersModel];
+const models = [UsersModel, GroupsModel];
 
 class Connect {
     init() {
