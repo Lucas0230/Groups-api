@@ -12,6 +12,8 @@ process.env.BUILD == 'development'
 
 import './database/connect';
 
+
+
 class App {
     constructor() {
 
@@ -26,6 +28,10 @@ class App {
         this.server.use(cors({
             origin: '*'
         }))
+        this.server.use((req, res, next) => {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            next();
+        })
 
     }
 
