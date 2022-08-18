@@ -19,4 +19,6 @@ routes.post('/auth/refresh', Users.checkToken)
 routes.get('/groups', Groups.get)
 routes.post('/groups', Groups.create)
 
+routes.get('/chats/:_id', Groups.getChat)
+
 export default routes;

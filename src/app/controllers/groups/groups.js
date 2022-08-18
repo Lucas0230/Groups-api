@@ -30,6 +30,24 @@ class Controller {
             res.status(400).json({ error: e });
         }
     }
+
+    async getChat(req, res) {
+        try {
+
+            const { _id } = req.params;
+
+            if (!_id) {
+                throw '_id is necessary'
+            }
+
+            const response = await Groups.findOne({ _id: _id }, { timeline: 1, avatar: 1, name: 1 });
+            res.status(200).json({ response });
+
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({ error: e });
+        }
+    }
 }
 
 export default new Controller();

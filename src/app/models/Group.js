@@ -12,6 +12,10 @@ class GroupsModel {
             tags: Array,
             avatar: { type: String, default: 'https://cdn.icon-icons.com/icons2/1674/PNG/512/person_110935.png' },
 
+
+            users: Array,
+            timeline: Array,
+
             status: { type: Boolean, default: true },
             archive: { type: Boolean, default: false },
 

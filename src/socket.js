@@ -1,69 +1,29 @@
-import http from './server';
 
-import io from 'socket.io';
+import Messages from './app/services/messages';
 
-io = io(http);
+export default (socket) => {
 
-console.log('oiiii')
+    socket.emit('connection');
 
-// Buscar do banco canais que foram criados
-
-var STATIC_CHANNELS = [{
-    name: 'Global chat',
-    participants: 0,
-    id: 1,
-    sockets: []
-}, {
-    name: 'Funny',
-    participants: 0,
-    id: 2,
-    sockets: []
-}];
-
-io.on('connection', (socket) => { // socket object may be used to send specific messages to the new connected client
-    console.log('new client connected');
-    socket.emit('connection', null);
-    socket.on('channel-join', id => {
-        console.log('channel join', id);
-        STATIC_CHANNELS.forEach(c => {
-            if (c.id === id) {
-                if (c.sockets.indexOf(socket.id) == (-1)) {
-                    c.sockets.push(socket.id);
-                    c.participants++;
-                    io.emit('channel', c);
-                }
-            } else {
-                let index = c.sockets.indexOf(socket.id);
-                if (index != (-1)) {
-                    c.sockets.splice(index, 1);
-                    c.participants--;
-                    io.emit('channel', c);
-                }
-            }
-        });
-
-        return id;
-    });
-    socket.on('send-message', message => {
-        io.emit('message', message);
-    });
-
-    socket.on('disconnect', () => {
-        STATIC_CHANNELS.forEach(c => {
-            let index = c.sockets.indexOf(socket.id);
-            if (index != (-1)) {
-                c.sockets.splice(index, 1);
-                c.participants--;
-                io.emit('channel', c);
-            }
-        });
-    });
-
-});
-
-
-app.get('/getChannels', (req, res) => {
-    res.json({
-        channels: STATIC_CHANNELS
+    socket.on("join", ({ room }) => {
+        console.log('SALA ', room)
+        socket.join(room)
     })
-});
+
+    socket.on("message", ({ message, room, userId, time }) => {
+
+        socket.to(room).emit('newMessage', {
+            message: message ? message : 'Mensagem Vazia',
+            userId: userId ? userId : false,
+            time: time ? time : new Date(),
+        })
+        socket.emit('newMessage', {
+            message: message ? message : 'Mensagem Vazia',
+            userId: userId ? userId : false,
+            time: time ? time : new Date(),
+        })
+
+        Messages.store(room, false, message)
+    })
+
+};
