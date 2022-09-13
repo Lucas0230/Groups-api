@@ -12,12 +12,15 @@ routes.use(Cors);
 routes.use((req, res, next) => Cors(req, res, next));
 
 routes.post('/users', Users.create)
+routes.get('/users/:id*?', Users.get)
 
 routes.post('/auth', Sessions.auth)
 routes.post('/auth/refresh', Users.checkToken)
 
-routes.get('/groups', Groups.get)
+routes.get('/groups/:id*?', Groups.get)
 routes.post('/groups', Groups.create)
+
+routes.put('/groups', Groups.addUser)
 
 routes.get('/chats/:_id', Groups.getChat)
 

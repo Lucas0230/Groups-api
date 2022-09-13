@@ -6,6 +6,23 @@ import jwt from 'jsonwebtoken';
 
 class Controller {
 
+    async get(req, res) {
+
+        try {
+            const { id } = req.params;
+
+            let users = await Users.findOne({ _id: id }, { name: 1 })
+
+            res.status(201).json({ users });
+
+        } catch (e) {
+            console.log(e);
+            res.status(400).json({ error: e });
+        }
+    }
+
+
+
     async create(req, res) {
 
         try {

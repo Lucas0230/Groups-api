@@ -50,7 +50,7 @@ class SessionController {
                 expiresIn: process.env.EXPIRE_AUTH
             });
 
-            res.status(200).json({ token });
+            res.status(200).json({ token, _id: user._id, name: user.name });
 
         } catch (e) {
             console.log(e)

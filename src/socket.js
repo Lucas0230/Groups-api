@@ -10,20 +10,22 @@ export default (socket) => {
         socket.join(room)
     })
 
-    socket.on("message", ({ message, room, userId, time }) => {
+    socket.on("message", ({ message, room, userId, time, name }) => {
 
         socket.to(room).emit('newMessage', {
             message: message ? message : 'Mensagem Vazia',
             userId: userId ? userId : false,
             time: time ? time : new Date(),
+            name: name ? name : ''
         })
         socket.emit('newMessage', {
             message: message ? message : 'Mensagem Vazia',
             userId: userId ? userId : false,
             time: time ? time : new Date(),
+            name: name ? name : ''
         })
 
-        Messages.store(room, false, message)
+        Messages.store(room, userId, message, name)
     })
 
 };
